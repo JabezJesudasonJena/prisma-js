@@ -1,7 +1,31 @@
 {
   "dependencies": {
     "@prisma/client": "^5.22.0",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "prisma": "^5.22.0"
-  }
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
+  "name": "b",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JabezJesudasonJena/prisma-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JabezJesudasonJena/prisma-js/issues"
+  },
+  "homepage": "https://github.com/JabezJesudasonJena/prisma-js#readme"
 }

@@ -1,0 +1,63 @@
+First 
+    1. npm init -y
+        This initialises a new npm package
+    2. npm install prisma@5 @prisma/client@5
+        This installs the prisma version of -- 5
+    3. npx prisma init
+        initialises the prisma
+    4. Create a new DB in sql
+        get the db url
+            for eg : postgresql://postgres:123@localhost:5433/prismadb
+    5. OPEN -- prisma/schema.prisma
+        add model / schema 
+            eg : 
+                [
+                    model User {
+                    id    Int    @id @default(autoincrement())
+                    name  String
+                    email String @unique
+                    }
+                ]
+    6. Run Migration to save the table/model 
+        npx prisma migrate dev --name init
+    7. Generate
+        npx prisma migrate dev --name init
+
+    8. Add a new index.js
+        code : {
+            const { PrismaClient } = require("@prisma/client");
+
+            const prisma = new PrismaClient();
+
+            async function main() {
+            // Create user
+            const user = await prisma.user.create({
+                data: {
+                name: "Jabez",
+                email: "jabez@gmail.com",
+                },
+            });
+
+            console.log("Created:", user);
+
+            // Fetch users
+            const users = await prisma.user.findMany();
+            console.log("All users:", users);
+            }
+
+            main()
+            .catch(console.error)
+            .finally(async () => {
+                await prisma.$disconnect();
+            });
+
+        }
+    9. Run 
+        node index.js
+
+    10. View visually
+        1. Go to the pGAdmin 4 and see the tables
+        2. To view visually go to 
+            -- npx prisma studio
+        
+    -- Done --

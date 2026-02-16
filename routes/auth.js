@@ -22,18 +22,60 @@ authrouter.post("/signup", async (req, res) => {
     }
 })
 
-authrouter.post("/chat", async (req, res) => {
+authrouter.post("/chat/create", async (req, res) => {
     try {
         const {user1Id, user2Id} = req.body;
-        const chat = await prisma.chat.create({
-            data : {
-                user1Id,
-                user2Id
+        const chat = await prisma.chat.findMany({
+            where : {
+                user1Id : user1Id,
+                user2Id : user2Id
             }
         })
-        res.json(chat);
+
+        if (chat.length > 0) return res.status(200).json(chat, {message : "Chat already exist"});
+        
+        const createChat = await prisma.chat.create({
+            data : {
+                user1Id : user1Id,
+                user2Id : user2Id
+            }
+        });
+        //console.log(createChat);
+        return res.json(createChat);
     } catch (err) { 
         console.log(err.message)
+    }
+})
+
+authrouter.get("/chat/:id", async (req, res) => {
+    try { 
+        const id = Number(req.params.id);
+
+        const chat = await prisma.chat.findFirst({
+            where : {
+                id : id
+            }
+        });
+        if (chat) return res.status(200).json(chat);
+        return res.status(200).json({message : "User not found"});
+    } catch (err) {
+        return res.status(400).json({message : err.message})
+    }
+})
+
+authrouter.post("/message/send", async(req, res) => {
+    try {
+        const {chatId, senderId, content} = req.body;
+        const con = await prisma.message.create({
+            data : {
+                chatId : chatId,
+                senderId : senderId,
+                content : content
+            }
+        });
+        res.status(200).json(con);
+    } catch (err) {
+        return res.status(400).json({message : err.message})
     }
 })
 
